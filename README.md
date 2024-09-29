@@ -9,6 +9,13 @@ Setup:
 - Create conda python env via the `envrionment.yml`
 
 
+**NOTE"** This repo includes  self-contained src code for the maximal spheres for grippers and testing grasps in isaacgym. Please check their individual folders for reference and setup:
+
+> For grasp simulation test based on GenDexGrasp, see: `grasp-test-isaacgym/`
+
+> For computing maximal spheres for gripper, see: `grasp-maximal-sphere/`
+
+
 Scripts:
 
 - Training: `python gdx_train_gcs.py` 

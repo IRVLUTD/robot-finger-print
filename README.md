@@ -1,22 +1,31 @@
-# robot-finger-print
-Code repo for RobotFingerPrint paper. The overall flow and evaluation setup is adapted from [GenDexGrasp](https://github.com/tengyu-liu/GenDexGrasp).
+# RobotFingerPrint 
 
-Setup:
+RobotFingerPrint: Unified Gripper Coordinate Space for Multi-Gripper Grasp Synthesis​
 
+Ninad Khargonkar, Luis Felipe Casas, Balakrishnan Prabhakaran, Yu Xiang
+
+[Paper (arXiv)](https://arxiv.org/abs/2409.14519) | [Video](https://youtu.be/qvyhMjGf46I?feature=shared) | [Project website](https://irvlutd.github.io/RobotFingerPrint/)
+
+> Approach for multi embodiment grasping method on grippers with different number of fingers. 
+
+## Setup
+
+- The overall flow and evaluation setup is adapted from [GenDexGrasp](https://github.com/tengyu-liu/GenDexGrasp).
 - Set a symbolic link to GenDexGrasp dataset under `./dataset/GenDexGrasp/`
   - Check the associated data files README from [here](https://utdallas.box.com/v/RobotFingerPrint-Data)
   - The above folder will also have the training and inference log files for reference
 - Create conda python env via the `envrionment.yml`
 
 
-**NOTE"** This repo includes  self-contained src code for the maximal spheres for grippers and testing grasps in isaacgym. Please check their individual folders for reference and setup:
+### Note
+This repo includes  self-contained src code for the maximal spheres for grippers and testing grasps in isaacgym. Please check their individual folders for reference and setup:
 
 > For grasp simulation test based on GenDexGrasp, see: `grasp-test-isaacgym/`
 
 > For computing maximal spheres for gripper, see: `grasp-maximal-sphere/`
 
 
-Scripts:
+## RFP Scripts
 
 - Training: `python gdx_train_gcs.py` 
   - Args used: `--n_epochs 16 --ann_temp 1.5 --ann_per_epochs 2`
@@ -36,4 +45,15 @@ Scripts:
 
 - Grasp Evaluation:
   - We used the GenDexGrasp isaac gym evaluation setup with `learning_rate=0.1` and `step_size=0.02` for the grasp evaluation params for each gripper (inside the env script, under `_set_normal_force_pose()` method). 
+
+## Citing RFP
+
+```bibtex
+@inproceedings{khargonkar2024robotfingerprint,
+title={RobotFingerPrint: Unified Gripper Coordinate Space for Multi-Gripper Grasp Synthesis​},
+author={Khargonkar, Ninad and Casas, Luis Felipe and  and Prabhakaran, Balakrishnan and Xiang, Yu},
+journal={arXiv preprint arXiv:2409.14519},
+year={2024}
+}
+```
 

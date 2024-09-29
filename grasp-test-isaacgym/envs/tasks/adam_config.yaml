@@ -1,0 +1,5 @@
+step_size: 0.02 
+learning_rate: 0.1 
+contact_threshold: 0.005
+num_object_pts: 2048
+hmodel_type: "gdx"

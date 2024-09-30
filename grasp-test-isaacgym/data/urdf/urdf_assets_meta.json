@@ -1,0 +1,20 @@
+{
+    "urdf_path": {
+        "ezgripper": "data/urdf/ezgripper/ezgripper.urdf",
+        "robotiq_arg85": "data/urdf/robotiq_arg85/urdf/robotiq_arg85_description.urdf",
+        "robotiq_3finger": "data/urdf/robotiq_3finger/urdf/robotiq_3finger_description.urdf",
+        "barrett": "data/urdf/barrett_adagrasp/model.urdf",
+        "allegro": "data/urdf/allegro_hand_description/allegro_hand_description_left.urdf",
+        "shadowhand": "data/urdf/sr_grasp_description/urdf/shadowhand.urdf",
+        "tonghand": "data/urdf/tonghand/urdf/tonghand_urdf.urdf"
+    },
+    "meshes_path": {
+        "ezgripper": "data/urdf/ezgripper/meshes",
+        "robotiq_arg85": "data/urdf/robotiq_arg85/meshes",
+        "robotiq_3finger": "data/urdf/robotiq_3finger/urdf",
+        "barrett": "data/urdf/barrett_adagrasp/meshes",
+        "allegro": "data/urdf/allegro_hand_description/meshes",
+        "shadowhand": "data/urdf/sr_grasp_description/meshes",
+        "tonghand": "data/urdf/tonghand/meshes"
+    }
+}

@@ -18,6 +18,7 @@ def make_parser():
     parser.add_argument('--num_w', type=int, help='Number of spheres to test', default=10)
     parser.add_argument('--step_size', type=float, help='Radius step size', default=0.005)
     parser.add_argument('--init_r', type=float, help='Initial Radius', default=0.03)
+    parser.add_argument('--sphere_mass', type=float, help='Initial Radius', default=0.1)
     parser.add_argument('--gripper_ID', type=str, help='gripper name to test')
     parser.add_argument('--controller', type=str,
                         help='Gripper Controller to use while testing, should match the controller dictionary in the Manager Class',
@@ -118,7 +119,7 @@ def import_gripper(work_path,usd_path, EF_axis):
         #robot.set_enabled_self_collisions(False)
         return robot, T_EF
 
-def import_objects(work_path, num_w, step_size, init_r):
+def import_objects(work_path, num_w, step_size, init_r, mass):
     """ Import Object .usd to World
 
     """
@@ -128,7 +129,7 @@ def import_objects(work_path, num_w, step_size, init_r):
     for i in range(num_w):
         r = init_r+(step_size*i)
         prim = DynamicSphere(prim_path= work_path[:-1]+str(i)+"/Sphere", color=np.array([1.0, 1.0, 0.0]), 
-                            mass=0.1,radius =r, name = "Sphere"+str(i) , translation = [0,0,0], physics_material = material)
+                            mass=mass,radius =r, name = "Sphere"+str(i) , translation = [0,0,0], physics_material = material)
         #object_parent = world.scene.add(prim)
         prim.set_collision_approximation("convexHull")
         
@@ -156,6 +157,7 @@ if __name__ == "__main__":
     num_w = args.num_w
     step_size = args.step_size
     init_r = args.init_r
+    sphere_mass = args.sphere_mass
 
     #physics_dt = 1/120
     world = World(set_defaults = False)
@@ -181,7 +183,7 @@ if __name__ == "__main__":
                      root_path = "/World/Workstation_")
 
 
-    spheres_radii, prims = import_objects(work_path, num_w,step_size, init_r)
+    spheres_radii, prims = import_objects(work_path, num_w,step_size, init_r,sphere_mass)
 
     plane = GroundPlane(prim_path="/World/GroundPlane", z_position=-1)
 
@@ -238,7 +240,7 @@ if __name__ == "__main__":
             
             world.step(render=render) # execute one physics step and one rendering step if not headless
             if i == 0:
-                world.pause()
+                #world.pause()
                 i+=1
             #world.pause()
             if pbar.n != np.sum(viewer.completed): #Progress bar

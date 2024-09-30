@@ -192,7 +192,7 @@ class View():
                 self.data[ind] = self.objects.get_contact_force_data(ind)
         #Debug
         if rb_ind.tolist()!=self.last_rb_ind:
-            print(rb_ind,"--", self.last_rb_ind)
+            #print(rb_ind,"--", self.last_rb_ind)
             #print(self.objects.get_contact_force_matrix(rb_ind))
             #self.world.pause()
             pass
@@ -231,7 +231,7 @@ class View():
         """
         finish_ind=np.atleast_1d(np.squeeze(finish_ind))
         self.completed[finish_ind] = 1
-        print("Passed: ", finish_ind)
+        #print("Passed: ", finish_ind)
         #Report Fall
         for ind in finish_ind:
             self.manager.report_passed(self.radii[ind],
@@ -243,7 +243,7 @@ class View():
 
     def test_failed(self,finish_ind):
         finish_ind=np.atleast_1d(np.squeeze(finish_ind))
-        print("Failed: ", finish_ind)
+        #print("Failed: ", finish_ind)
         self.completed[finish_ind] = 1
         for ind in finish_ind:
             self.manager.report_failed(self.radii[ind])

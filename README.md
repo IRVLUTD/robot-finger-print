@@ -8,7 +8,7 @@ Ninad Khargonkar, Luis Felipe Casas, Balakrishnan Prabhakaran, Yu Xiang
 
 > Multi embodiment generalizable grasping method across grippers with different number of fingers.
 
-<img src="./media/teaser-wide.webp" width="400">
+<img src="./media/teaser-wide.webp" width="600">
 
 ## Setup
 
@@ -28,7 +28,7 @@ This repo includes  self-contained src code for the maximal spheres for grippers
 
 Sphere Grasping example:
 
-<img src="./media/allegro_sphere_grasp.gif" width="200">
+<img src="./media/allegro_sphere_grasp.gif" width="250">
 
 ## RFP Scripts
 
@@ -55,7 +55,7 @@ Sphere Grasping example:
 
 Generated grasp example after the grasp optimzation process:
 
-<img src="./media/barrett_grasp_final.gif" width="200">
+<img src="./media/barrett_grasp_final.gif" width="250">
 
 ## Citing RFP
 

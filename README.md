@@ -6,7 +6,9 @@ Ninad Khargonkar, Luis Felipe Casas, Balakrishnan Prabhakaran, Yu Xiang
 
 [Paper (arXiv)](https://arxiv.org/abs/2409.14519) | [Video](https://youtu.be/qvyhMjGf46I?feature=shared) | [Project website](https://irvlutd.github.io/RobotFingerPrint/)
 
-> Approach for multi embodiment grasping method on grippers with different number of fingers. 
+> Multi embodiment generalizable grasping method across grippers with different number of fingers.
+
+<img src="./media/teaser-wide.webp" width="400">
 
 ## Setup
 
@@ -24,6 +26,9 @@ This repo includes  self-contained src code for the maximal spheres for grippers
 
 > For computing maximal spheres for gripper, see: `grasp-maximal-sphere/`
 
+Sphere Grasping example:
+
+<img src="./media/allegro_sphere_grasp.gif" width="200">
 
 ## RFP Scripts
 
@@ -45,6 +50,12 @@ This repo includes  self-contained src code for the maximal spheres for grippers
 
 - Grasp Evaluation:
   - We used the GenDexGrasp isaac gym evaluation setup with `learning_rate=0.1` and `step_size=0.02` for the grasp evaluation params for each gripper (inside the env script, under `_set_normal_force_pose()` method). 
+  - See the `grasp-test-isaacgym` self-contained folder for more details.
+
+
+Generated grasp example after the grasp optimzation process:
+
+<img src="./media/barrett_grasp_final.gif" width="200">
 
 ## Citing RFP
 

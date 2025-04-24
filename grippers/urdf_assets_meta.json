@@ -1,0 +1,35 @@
+{
+  "urdf_path": {
+    "Allegro": "Allegro/allegro_hand_description_right.urdf",
+    "Barrett": "Barrett/Barrett.urdf",
+    "fetch_gripper": "fetch_gripper/fetch_gripper.urdf",
+    "fetch_gripper_umi": "fetch_gripper_umi/fetch_gripper_umi.urdf",
+    "franka_panda": "franka_panda/franka_panda.urdf",
+    "h5_hand": "h5_hand/h5_hand.urdf",
+    "HumanHand": "HumanHand/HumanHand.urdf",
+    "jaco_robot": "jaco_robot/jaco_robot.urdf",
+    "robotiq_3finger": "robotiq_3finger/robotiq_3finger.urdf",
+    "sawyer": "sawyer/sawyer.urdf",
+    "shadow_hand": "shadow_hand/shadow_hand.urdf",
+    "wsg_50": "wsg_50/wsg_50.urdf",
+    "mano_left": "mano_left/mano_left.urdf",
+    "mano_right": "mano_right/mano_right.urdf"
+  },
+  "meshes_path": {
+    "Allegro": "Allegro/meshes",
+    "Barrett": "Barrett/meshes",
+    "fetch_gripper": "fetch_gripper/meshes",
+    "fetch_gripper_umi": "fetch_gripper_umi/meshes",
+    "franka_panda": "franka_panda/meshes",
+    "h5_hand": "h5_hand/meshes",
+    "HumanHand": "HumanHand/meshes",
+    "jaco_robot": "jaco_robot/jaco_robot.urdf",
+    "robotiq_3finger": "robotiq_3finger/meshes",
+    "sawyer": "sawyer/meshes",
+    "shadow_hand": "shadow_hand/meshes",
+    "wsg_50": "wsg_50/meshes",
+    "mano_left": "mano_left/meshes",
+    "mano_right": "mano_right/meshes"
+  }
+
+}

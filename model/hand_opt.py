@@ -1681,7 +1681,7 @@ class AdamGraspTransfer:
         )
 
 
-class AdamGraspCmap:
+class AdamHandObjectGraspCmap:
     def __init__(
         self,
         target_robot_name,

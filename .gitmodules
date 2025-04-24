@@ -1,0 +1,3 @@
+[submodule "mano_pybullet"]
+	path = mano_pybullet
+	url = git@github.com:ikalevatykh/mano_pybullet.git

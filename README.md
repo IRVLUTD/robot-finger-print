@@ -9,7 +9,7 @@ Links:
 [Video](https://youtu.be/qvyhMjGf46I?feature=shared) | 
 [Project website](https://irvlutd.github.io/RobotFingerPrint/)
 
-> Approach for multi embodiment grasping method on grippers with different number of fingers. 
+> Multi embodiment generalizable grasping method across grippers with different number of fingers.
 
 <img src="./assets/media/teaser-wide.webp" width="600">
 

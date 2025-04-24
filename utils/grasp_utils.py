@@ -1,6 +1,5 @@
 """
 Utility functions for grasp pose alignment into a common space
-Goal: Represent every gripper's pose in a common, aligned way
 """
 
 import os
@@ -11,6 +10,24 @@ import json
 from scipy.spatial.transform import Rotation as R
 
 from model.hand_model import GcsHandModel
+
+from .rot6d_utils import robust_compute_rotation_matrix_from_ortho6d
+
+
+def convert_9dGrasp_to_RT(q_grasp):
+    # Convert the target grasp q (9-dim) to 4x4 pose transform RT
+    target_rot6d = q_grasp[3:9]
+    target_trans = q_grasp[:3].cpu().numpy()
+    target_rot_mat = (
+        robust_compute_rotation_matrix_from_ortho6d(target_rot6d.unsqueeze(0))
+        .squeeze(1)
+        .cpu()
+        .numpy()
+    )
+    RT_grasp = np.eye(4)
+    RT_grasp[:3, :3] = target_rot_mat
+    RT_grasp[:3, 3] = target_trans
+    return RT_grasp
 
 
 def rotation_matrix_from_vectors(vec1, vec2):
@@ -472,5 +489,52 @@ def get_handmodel(
         )
         return hand_model
     else:
-        raise NotImplementedError
+        if datadir is None:
+            urdf_assets_meta = json.load(open(json_path))
+            urdf_path = urdf_assets_meta["urdf_path"][robot]
+            meshes_path = urdf_assets_meta["meshes_path"][robot]
+        else:
+            urdf_assets_meta = json.load(open(os.path.join(datadir, json_path)))
+            urdf_path = os.path.join(datadir, urdf_assets_meta["urdf_path"][robot])
+            meshes_path = os.path.dirname(
+                urdf_path
+            )  # All mesh paths in urdf are relative to this dir
+        hand_model = GcsHandModel(
+            robot,
+            urdf_path,
+            meshes_path,
+            urdf_datadir=datadir,
+            batch_size=batch_size,
+            device=device,
+            hand_scale=hand_scale,
+        )        
 
+
+def get_urdf_path(gripper_name):
+    if gripper_name == "fetch_gripper":
+        return "fetch_gripper/fetch_gripper.urdf"
+    elif gripper_name == "fetch_gripper_umi":
+        return "fetch_gripper_umi/fetch_gripper_umi.urdf"
+    elif gripper_name == "Barrett":
+        return "Barrett/Barrett.urdf"
+    elif gripper_name == "HumanHand":
+        return "HumanHand/HumanHand.urdf"
+    elif gripper_name == "Allegro":
+        return "Allegro/allegro_hand_description_right.urdf"
+    elif gripper_name == "franka_panda":
+        return "franka_panda/franka_panda.urdf"
+    elif gripper_name == "jaco_robot":
+        return "jaco_robot/jaco_robot.urdf"
+    elif gripper_name == "robotiq_3finger":
+        return "robotiq_3finger/robotiq_3finger.urdf"
+    elif gripper_name == "wsg_50":
+        return "wsg_50/wsg_50.urdf"
+    elif gripper_name == "shadow_hand":
+        return "shadow_hand/shadow_hand.urdf"
+    elif gripper_name == "sawyer":
+        return "sawyer/sawyer.urdf"
+    elif gripper_name == "h5_hand":
+        return "h5_hand/h5_hand.urdf"
+    else:
+        print("[ERROR]: INVALID Gripper name. Returning empty string!!!")
+        return ""

@@ -14,6 +14,7 @@ from pytorch_kinematics.urdf_parser_py.urdf import URDF, Box, Cylinder, Mesh, Sp
 
 from utils.rot6d_utils import *
 from utils.math_utils import *
+import trimesh.sample
 
 
 class GcsHandModel:
@@ -41,15 +42,47 @@ class GcsHandModel:
         self.global_rotation = None
         self.softmax = torch.nn.Softmax(dim=-1)
 
+        self.full_mesh_pts = None
+        if robot_name == "fetch_gripper":
+            full_gripper_mesh = trimesh.load(
+                os.path.join(mesh_path, f"{robot_name}_base_pose.obj")
+            )
+            full_mesh_pts = np.array(
+                trimesh.sample.sample_surface_even(
+                    mesh=full_gripper_mesh.copy(),
+                    count=512,
+                    seed=42,
+                )[0]
+            )
+            # Create a batched tensor
+            self.full_mesh_pts = (
+                torch.from_numpy(full_mesh_pts)
+                .to(device)
+                .float()
+                .unsqueeze(0)
+                .repeat(batch_size, 1, 1)
+            )
+
         self.surface_points = {}
         self.surface_points_normal = {}
         visual = URDF.from_xml_string(open(urdf_filename).read())
         self.mesh_verts = {}
         self.mesh_faces = {}
 
-        gripper_surface_pts_dict = os.path.join(
-            urdf_datadir, "multidex_gripper_surface_pts.pk"
-        )
+        if robot_name in {
+            "barrett",
+            "allegro",
+            "ezgripper",
+            "shadowhand",
+            "robotiq_3finger_gdx",
+        }:
+            gripper_surface_pts_dict = os.path.join(
+                urdf_datadir, "multidex_gripper_surface_pts.pk"
+            )
+        else:
+            gripper_surface_pts_dict = os.path.join(
+                urdf_datadir, "mgg_gripper_surface_pts.pk"
+            )
 
         with open(gripper_surface_pts_dict, "rb") as f:
             _all_surf_pts_dict = pickle.load(f)
@@ -460,3 +493,42 @@ class GcsHandModel:
             corr_grp_pts_indices = sorted_indices[:, 0]  # pick the closest
             return corr_grp_pts_indices, obj_mask
 
+    def get_fullmesh_points(self, q=None):
+        if self.full_mesh_pts is None:
+            raise NotImplementedError
+        if q is not None:
+            self.update_kinematics(q)
+        mesh_pts = self.full_mesh_pts.detach().clone()
+        mesh_pts = torch.matmul(
+            self.global_rotation, mesh_pts.transpose(1, 2)
+        ).transpose(1, 2) + self.global_translation.unsqueeze(1)
+        return mesh_pts
+
+    def grasp_transfer_correspondence(self, source_gripper_coord, mutual_pairs=True):
+        """
+        Returns (source_idxs, target_idxs): index mask into source and target with the established correspondence
+        """
+        grp_coord = self.gripper_coords_all
+        # source shape (M,2) ; target shape (N, 2) ; distances shape (M, N)
+        distances = self.spherical_distance(source_gripper_coord, grp_coord)
+        M = source_gripper_coord.shape[0]
+        N = grp_coord.shape[0]
+        if mutual_pairs:
+            # Find mutual pairs i.e indices in M and N which are both closest to eatch other
+            closest_source_to_target = torch.argmin(distances, dim=1)  # (M,)
+            closest_target_to_source = torch.argmin(distances, dim=0)  # (N,)
+            ctc_source = closest_target_to_source[closest_source_to_target]
+            source_idxs = ctc_source[
+                ctc_source == torch.arange(M).to(ctc_source.device)
+            ]
+            ctc_target = closest_source_to_target[closest_target_to_source]
+            target_idxs = ctc_target[
+                ctc_target == torch.arange(N).to(ctc_target.device)
+            ]
+        else:
+            # use all source pts and find corresponding target pts
+            closest_source_to_target = np.argmin(distances, axis=1)  # (M,)
+            source_idxs = np.arange(M)
+            target_idxs = closest_source_to_target
+
+        return source_idxs, target_idxs

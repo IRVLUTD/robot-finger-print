@@ -13,6 +13,7 @@ from utils.grasp_utils import (
     rotation_matrix_from_vectors,
     convert_gripper_to_aligned_pose,
 )
+from utils.rot6d_utils import robust_compute_rotation_matrix_from_ortho6d
 
 #### RFP and Cmap Grasp Opt ####
 

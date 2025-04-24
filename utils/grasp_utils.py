@@ -206,8 +206,12 @@ def get_gripper_common_alignment(gname: str):
         return quaternion.from_euler_angles([0, math.pi, 0])
     elif gname == "ezgripper":
         return quaternion.from_euler_angles([0, -math.pi / 2.0, 0])
+    elif gname in {"mano_left", "mano_right"}:
+        return get_quat_np(
+            R.from_euler("xyz", [-math.pi / 2, 0, -math.pi / 2]).as_quat()
+        )
     else:
-        print("Invalid gripper name. Returning None!")
+        print("Invalid gripper name. Raising Error!")
         raise NotImplementedError
 
 
@@ -281,7 +285,12 @@ def get_gripper_palm_position_mgg(gname: str):
         return -1 * np.array([0, 0, 0.045])
     elif gname == "ezgripper":
         return -1 * np.array([-0.082, 0, 0])
+    elif gname == "mano_right":
+        return -1 * np.array([-0.02, 0.005, 0])
+    elif gname == "mano_left":
+        return -1 * np.array([0.02, 0.005, 0])
     else:
+        print("Invalid gripper name. Raising Error!")
         raise NotImplementedError
 
 
@@ -337,7 +346,12 @@ def get_gripper_palm_position_isaac_sphere(gname: str):
         return -1 * np.array([0, 0, 0.048])
     elif gname == "ezgripper":
         return -1 * np.array([-0.082, 0, 0])
+    elif gname == "mano_right":
+        return -1 * np.array([-0.02, 0.005, 0])
+    elif gname == "mano_left":
+        return -1 * np.array([0.02, 0.005, 0])
     else:
+        print("Invalid gripper name. Raising Error!")
         raise NotImplementedError
 
 
@@ -487,7 +501,6 @@ def get_handmodel(
             device=device,
             hand_scale=hand_scale,
         )
-        return hand_model
     else:
         if datadir is None:
             urdf_assets_meta = json.load(open(json_path))
@@ -507,7 +520,8 @@ def get_handmodel(
             batch_size=batch_size,
             device=device,
             hand_scale=hand_scale,
-        )        
+        )
+    return hand_model
 
 
 def get_urdf_path(gripper_name):

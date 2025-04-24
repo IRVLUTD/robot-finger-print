@@ -246,6 +246,10 @@ class GcsHandModel:
             hand_normal = (
                 1.0 * torch.Tensor([[1.0, 0.0, 0.0]]).to(self.device).T.float()
             )
+        elif self.robot_name in {"mano_left", "mano_right"}:
+            hand_normal = (
+                1.0 * torch.Tensor([[0.0, -1.0, 0.0]]).to(self.device).T.float()
+            )
         else:
             raise NotImplementedError
         return hand_normal

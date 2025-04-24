@@ -1,7 +1,13 @@
+import os
+import os.path as osp
+
 import cv2
+import trimesh
 import numpy as np
 import open3d as o3d
 from scipy.spatial.distance import cdist
+
+from .grasp_utils import regularize_pc_point_count
 
 
 def compute_contact_map(gripper_pts, obj_pts, sharp_factor):
@@ -205,3 +211,56 @@ def backproject_camera(im_depth, K, target_mask=None, threshold=5):
     R = Kinv.dot(x2d.transpose())
     X = np.multiply(np.tile(depth.reshape(1, width * height), (3, 1)), R)
     return X[:, mask].T
+
+
+def get_fetch_gripper_mesh():
+    return trimesh.load("../assets/data/fetch_gripper_base_pose.obj")
+
+
+def get_gripper_pts_with_RT(gripper_mesh, RT_gripper, count=512):
+    """
+    Returns a sample of gripper points on its mesh, when the gripper pose is RT_gripper
+    """
+    gripper_pts = np.array(
+        trimesh.sample.sample_surface_even(
+            mesh=gripper_mesh.copy().apply_transform(RT_gripper),
+            count=512,
+            seed=42,
+        )[0]
+    )
+    return gripper_pts
+
+
+def translate_grasp_along_palm_normal(RT_gripper, delta=0.05, forward_axis=0, sign=1):
+    """
+    - Constructs a "bad" grasp for FETCH GRIPPER
+    - Does so by pushing a current grasp 5cm ahead
+    - Since its Fetch, we assume palm forward axis is +x
+    - Can also be used to construct a standoff grasp
+
+    delta (float): can be positive (go along palm normal) or negative (go in reverse direction)
+    forward_axis: {0 (x), 1 (y), 2 (z)} for palm normal
+    sign: 1 or -1 -- sign for axis i.e +-x, +-y, +-z
+
+    Returns:
+     - RT_bad (np.array) 4x4 TF
+    """
+    RT_bad = RT_gripper.copy()
+    if sign < 0:
+        delta *= -1
+    palm_normal = RT_gripper[:3, forward_axis]
+    t_old = RT_gripper[:3, 3]
+    t_new = t_old + delta * palm_normal
+    RT_bad[:3, 3] = t_new
+    return RT_bad
+
+
+def determine_local_objpc_region(obj_pc, gripper_pts, dist_threshold=0.08, count=1000):
+    obj_hand_dist = np.min(cdist(obj_pc, gripper_pts), axis=1)
+    idxs_close = obj_hand_dist < dist_threshold
+    obj_pc_subset = obj_pc[idxs_close]
+    # DO FPS on selected object points
+    obj_pc_subset = regularize_pc_point_count(
+        obj_pc_subset, count, use_farthest_point=True
+    )[0]
+    return obj_pc_subset

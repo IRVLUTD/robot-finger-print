@@ -1,0 +1,16 @@
+{
+  "Allegro": 1.0,
+  "Barrett": 1.0,
+  "fetch_gripper": 1.0,
+  "fetch_gripper_umi": 1.0,
+  "franka_panda": 1.0,
+  "h5_hand": 1.0,
+  "HumanHand": 1.0,
+  "jaco_robot": 1.0,
+  "robotiq_3finger": 1.0,
+  "sawyer": 1.0,
+  "shadow_hand": 1.0,
+  "wsg_50": 1.0,
+  "mano_right": 1.0,
+  "mano_left": 1.0
+}

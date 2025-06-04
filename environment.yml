@@ -240,7 +240,6 @@ dependencies:
       - async-timeout==4.0.3
       - blinker==1.8.2
       - cfgv==3.4.0
-      - chamfer-3d==0.0.0
       - click==8.1.7
       - configargparse==1.7
       - cython==0.29.37
@@ -250,7 +249,6 @@ dependencies:
       - dash-table==5.0.0
       - distlib==0.3.8
       - docker-pycreds==0.4.0
-      - emd-cuda==0.0.0
       - etils==1.7.0
       - flask==3.0.3
       - freetype-py==2.4.0
@@ -277,12 +275,10 @@ dependencies:
       - multidict==6.0.5
       - nodeenv==1.9.1
       - numpy-quaternion==2023.0.4
-      - omegaconf==2.3.0
+      - omegaconf==1.4.0
       - open3d==0.18.0
       - pandas==2.2.2
       - plotly==5.23.0
-      - pointnet2==3.0.0
-      - pointnet2-ops==3.0.0
       - pre-commit==3.7.1
       - protobuf==4.25.3
       - pybullet==3.2.6
@@ -308,7 +304,7 @@ dependencies:
       - tensorboard-data-server==0.7.2
       - threadpoolctl==3.5.0
       - transforms3d==0.4.2
-      - trimesh==4.4.1
+      - trimesh==3.10.7
       - tzdata==2024.1
       - urchin==0.0.27
       - urdf-parser-py==0.0.4

@@ -29,10 +29,18 @@ Links:
 
 # Setup
 
+```bash
+git clone https://github.com/IRVLUTD/robot-finger-print.git --recursive
+```
+
 **Acknowledgements**: [GenDexGrasp](https://github.com/tengyu-liu/GenDexGrasp)
 code repository.
 
 - Create conda python env via the `envrionment.yml`.
+```bash
+conda env create -f environment.yml
+```
+
 - The overall flow and evaluation setup is adapted from [GenDexGrasp](https://github.com/tengyu-liu/GenDexGrasp).
 - Set a symbolic link to GenDexGrasp dataset under `./dataset/GenDexGrasp/`.
   - Check the associated data files README from [here](https://utdallas.box.com/v/RobotFingerPrint-Data).

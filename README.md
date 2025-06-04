@@ -55,7 +55,7 @@ ln -s ~/Datasets/GenDexGrasp ./dataset/GenDexGrasp
 
 - Download the UGCS related data files from [here](https://utdallas.box.com/v/RobotFingerPrint-Data).
   - This contains files like the generalized coordinates for different grippers, object point clouds + normals, and the coordinates for each grasp from GenDexGrasp dataset. 
-  - Please check the README in the link for correctly placing the data files and general information about what each file represents.
+  - Please check the [Dataset README](https://utdallas.box.com/v/RFPv1-PublicData-README) in the link for correctly placing the data files and general information about what each file represents.
 
 ## Mano Pybullet
 

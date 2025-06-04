@@ -16,6 +16,7 @@ Links:
 # Index
 - [Index](#index)
 - [Setup](#setup)
+  - [Dataset Preparation](#dataset-preparation)
   - [Mano Pybullet](#mano-pybullet)
   - [Possible Issues](#possible-issues)
   - [Simulation Env: Maximal Sphere and Grasp Test](#simulation-env-maximal-sphere-and-grasp-test)
@@ -42,9 +43,19 @@ conda env create -f environment.yml
 ```
 
 - The overall flow and evaluation setup is adapted from [GenDexGrasp](https://github.com/tengyu-liu/GenDexGrasp).
-- Set a symbolic link to GenDexGrasp dataset under `./dataset/GenDexGrasp/`.
-  - Check the associated data files README from [here](https://utdallas.box.com/v/RobotFingerPrint-Data).
-  - The above folder will also have the training and inference log files for reference.
+
+## Dataset Preparation
+
+- Download and extract the GenDexGrasp dataset zip to a desired location (for example: `~/Datasets/GenDexGrasp`) 
+- Set a symbolic link to GenDexGrasp dataset under `./dataset/GenDexGrasp/`:
+
+```
+ln -s ~/Datasets/GenDexGrasp ./dataset/GenDexGrasp
+```
+
+- Download the UGCS related data files from [here](https://utdallas.box.com/v/RobotFingerPrint-Data).
+  - This contains files like the generalized coordinates for different grippers, object point clouds + normals, and the coordinates for each grasp from GenDexGrasp dataset. 
+  - Please check the README in the link for correctly placing the data files and general information about what each file represents.
 
 ## Mano Pybullet
 

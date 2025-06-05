@@ -13,8 +13,8 @@ Links:
 
 <img src="./assets/media/teaser-wide.webp" width="600">
 
-# Index
-- [Index](#index)
+**Index**
+
 - [Setup](#setup)
   - [Dataset Preparation](#dataset-preparation)
   - [Mano Pybullet](#mano-pybullet)
@@ -50,6 +50,7 @@ conda env create -f environment.yml
 - Set a symbolic link to GenDexGrasp dataset under `./dataset/GenDexGrasp/`:
 
 ```
+mkdir dataset
 ln -s ~/Datasets/GenDexGrasp ./dataset/GenDexGrasp
 ```
 
@@ -81,7 +82,7 @@ convert the mano hand parameters.
 > While setting up `mano_pybullet`, if you see an error like `ImportError: cannot import name 'bool' from 'numpy'`. 
 > Try: `pip install git+https://github.com/mattloper/chumpy`. [(Link to github issue)](https://github.com/mattloper/chumpy/issues/55)
 
-
+> If you see `ImportError` with `omegaconf` arising from lighting's tensorboard logger, try changing the version of omegaconf installed. 
 
 ## Simulation Env: Maximal Sphere and Grasp Test 
 This repo includes  self-contained source code for the maximal spheres for 

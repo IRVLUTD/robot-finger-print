@@ -77,7 +77,7 @@ class GcsGraspModel(L.LightningModule):
                 ),
                 dim=-1,
             )
-        return (input_pc, target_map, target_cmap, target_gcs)
+        return input_pc, target_map, target_cmap, target_gcs
 
     def forward(self, input_pc, gt_gcs):
         return self.model(input_pc, gt_gcs)
@@ -106,14 +106,6 @@ class GcsGraspModel(L.LightningModule):
             logger=True,
         )
         self.log("trn_loss", loss_recon.item(), prog_bar=True)
-        if batch_idx == 0:
-            self._log_prediction_sample(
-                input_pc,
-                target_map,
-                pred_map,
-                gt_attn=None,
-                mode="trn",
-            )
         return loss
 
     def on_train_epoch_end(self):
@@ -159,7 +151,7 @@ class GcsGraspModel(L.LightningModule):
         self.log_dict(loss_dict, logger=True, sync_dist=True)
 
     def predict_step(self, batch, batch_idx):
-        input_pc, _ = self.get_inputs(batch)
+        input_pc, _, _, _ = self.get_inputs(batch)
         return self.model.predict(input_pc)
 
     def configure_optimizers(self):

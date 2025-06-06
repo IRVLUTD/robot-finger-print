@@ -275,7 +275,7 @@ dependencies:
       - multidict==6.0.5
       - nodeenv==1.9.1
       - numpy-quaternion==2023.0.4
-      - omegaconf==2.0.6
+      - omegaconf==2.1.2
       - open3d==0.18.0
       - pandas==2.2.2
       - plotly==5.23.0
